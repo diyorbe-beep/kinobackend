@@ -1,0 +1,52 @@
+# Render Blueprint for Movie API
+services:
+  - type: web
+    name: movie-api-backend
+    env: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn core.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        sync: false
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: DB_NAME
+        fromDatabase:
+          name: movie-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: movie-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: movie-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: movie-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: movie-db
+          property: port
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHANNEL_ID
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+
+databases:
+  - name: movie-db
+    databaseName: movie_db
+    user: movie_user
+    plan: free
+
+
+
+
