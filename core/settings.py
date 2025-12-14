@@ -1,6 +1,7 @@
 """
 Django settings for core project.
 """
+import os
 from pathlib import Path
 from datetime import timedelta
 from core import config
@@ -261,6 +262,5 @@ LOGGING = {
 }
 
 # Create logs directory if not exists
-import os
 os.makedirs(BASE_DIR / 'logs', exist_ok=True)
 
